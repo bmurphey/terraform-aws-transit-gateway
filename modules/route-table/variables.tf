@@ -36,8 +36,8 @@ variable "associations" {
 
 variable "propagations" {
   description = "List of Transit Gateway Attachments ids to propagate to the route table"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 ################################################################################
