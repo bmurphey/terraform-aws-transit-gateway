@@ -21,33 +21,37 @@ variable "tags" {
 ################################################################################
 
 variable "transit_gateway_id" {
-  description = "The ID of the EC2 Transit Gateway"
+  description = "The ID of the EC2 Transit Gateway for the route table"
   type        = string
-  default     = ""
 }
 
 variable "associations" {
-  description = "A map of transit gateway attachment IDs to associate with the Transit Gateway route table"
-  type = map(object({
-    transit_gateway_attachment_id = optional(string)
+  description = "List of Transit Gateway Attachments ids to associate to the route table"
+  type = list(object({
+    transit_gateway_attachment_id = string
     replace_existing_association  = optional(bool)
-    propagate_route_table         = optional(bool, false)
   }))
-  default = {}
+  default = []
+}
+
+variable "propagations" {
+  description = "List of Transit Gateway Attachments ids to propagate to the route table"
+  type        = list(string)
+  default     = []
 }
 
 ################################################################################
 # Route(s)
 ################################################################################
 
-variable "routes" {
+variable "static_routes" {
   description = "A map of Transit Gateway routes to create in the route table"
-  type = map(object({
+  type = list(object({
     destination_cidr_block        = string
     blackhole                     = optional(bool, false)
     transit_gateway_attachment_id = optional(string)
   }))
-  default = {}
+  default = []
 }
 
 variable "vpc_routes" {
